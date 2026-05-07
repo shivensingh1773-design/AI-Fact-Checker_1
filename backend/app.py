@@ -67,7 +67,13 @@ collection = None
 
 try:
     if MONGO_URI:
-        client_db = MongoClient(MONGO_URI, serverSelectionTimeoutMS=2000)
+        client_db = MongoClient(
+            MONGO_URI,
+            serverSelectionTimeoutMS=5000,
+            connectTimeoutMS=5000,
+            tls=True,
+            tlsAllowInvalidCertificates=True,
+        )
         client_db.admin.command("ping")
         db = client_db["chatbot"]
         collection = db["history"]
